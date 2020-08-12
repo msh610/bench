@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -march=armv8-a -mcpu=cortex-a53 -mfpu=neon -mfloat-abi=hard
 BINDIR = ./bin
 OBJDIR = ./obj
 SRCDIR = ./src
@@ -51,12 +51,10 @@ $(ASMDIR)/$(CONFIG)/%.s : $(SRCDIR)/%.cpp
 	$(CXX) -S $(CXXFLAGS) $(INCLIDES) -o $@ $<
 
 test: $(TARGET)
-	$(TARGET) 1024
-	$(TARGET) 2048
-	$(TARGET) 4096
 	$(TARGET) 
+
 clean:
-	rm -r $(BUILDDIR) $(BINDIR) $(ASMDIR)
+	rm -rf $(OBJDIR) $(BINDIR) $(ASMDIR)
 
 rebuild:
 	make clean && make
